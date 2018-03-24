@@ -82,7 +82,10 @@ def get_video_entries(video_id):
                 ).format(id=video_id, key=AUTH_KEY)
     r = requests.get(endpoint)
     json_data = r.json()
-    items = json_data['items'][0]
+    try:
+        items = json_data['items'][0]
+    except IndexError:
+        raise IndexError('video_idが見つかりません.')
     return VideoEntry(items)
 
 
@@ -136,7 +139,10 @@ def get_channel_entry(channel_id):
                 ).format(id=channel_id, key=AUTH_KEY)
     r = requests.get(endpoint)
     json_data = r.json()
-    items = json_data['items'][0]
+    try:
+        items = json_data['items'][0]
+    except IndexError:
+        raise IndexError('channel_idが見つかりません.')
     return ChannelEntry(items)
 
 
